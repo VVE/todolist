@@ -58,6 +58,7 @@ For simplicity, the client does not include any user interface and plays the rol
 11) mark the deleted task as completed (similarly).
 # File structure
 todolist
+```
 L .git
 L cmd
   L client
@@ -73,3 +74,4 @@ L todolist
 L go.mod
 L go.sum
 L README.md
+```
