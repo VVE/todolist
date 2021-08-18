@@ -1,0 +1,75 @@
+// Copyright 2021 Vladimir Vanin.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+//option go_package = "https://github.com/VVE/todolist";
+option go_package = "https://github.com/VVE/todolist/todolist";
+
+package todolist;
+
+message Empty {}
+
+message Task {
+  int32 id =               1;  // Task id.
+  string title =           2;  // Task title.
+  string specification =   3;  // Task specification.
+  bool done =              4;  // Done mark. 
+}
+
+message TaskId {
+  int32 id = 1;
+}
+
+message TaskList {  // full task list response result.
+  repeated Task task_list = 1;
+//  string result =           6;  // breef result.
+// -- предыдущие наброски  
+//message TaskList {
+//  message TaskListItem {
+//    map<string, TaskListItem> task_list = 5;
+//  };
+//  string result =          6;  // breef result.
+//}
+//message TaskList {
+// repeated task_list = 1;
+}
+
+// The todolist service definition.
+service TodoList {
+  // Unary RPCs.
+  // Add task Task.
+  rpc AddTask (Task) returns (Empty) {}
+  // Edit task Task.
+  rpc EditTask (Task) returns (Empty) {}
+  // Mark task TaskTitle done. 
+  rpc DoneTask (TaskId) returns (Empty) {} 
+  // Delete task TaskTitle.
+  rpc DeleteTask(TaskId) returns (Empty) {}
+  // Show task TaskTitle.
+  rpc ShowTask (TaskId) returns (Task) {}
+  // Show task list.
+  rpc ShowTaskList (Empty) returns (TaskList) {}
+}
+
+// message Empty есть в https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/empty.proto
+// наверное, надо, как там: 
+//option csharp_namespace = "Google.Protobuf.WellKnownTypes";
+//option go_package = "google.golang.org/protobuf/types/known/emptypb";
+// service Foo {
+// rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);
+//     }
+// а может:
+//message Empty {
+//}
