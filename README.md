@@ -28,24 +28,29 @@ The debugging output is left in the source code.
 | Time management | https://en.wikipedia.org/wiki/Time_management#Implementation_of_goals |
 # Proto file
 The task is represented by a message with the following fields: 
-id (int32) - identifier, 
-title (string) - title, 
-specification (string) - description, 
-done (bool) - mark of completion.
-ID is required in order not to require the uniqueness of the titles.
+* id (int32) - identifier, 
+* title (string) - title, 
+* specification (string) - description, 
+* done (bool) - mark of completion.
+
+'id' is required in order not to require the uniqueness of the titles.
+
 The list of tasks is represented by a message with repeated field.
 
 Service is a Remote Procedure Calls (rpc) definition.
-The AddTask procedure adds a task to the database. The argument is the structure of the task, the result is an error message (empty if there is no error). 
-The EditTask procedure modifies a task in the database. The argument is the structure of the task, the result is an error message (empty if there is no error).
-The DoneTask procedure changes the status of the task in the database to Completed. The argument is the task ID, the result is an error message (empty if there is no error).
-The Delete Task procedure deletes the task from the database. The argument is the task ID, the result is an error message (empty if there is no error).
-The ShowTask procedure provides the contents of the task from the database. The argument is the task ID, the result is the task structure.
-The Show Task List procedure provides a list of the contents of tasks from the database. There is no argument, the result is a list of tasks.
-The server itself fills in the ID field when adding a task.
-Sorting of tasks in the database is not required, since their order does not change.
+
+* The AddTask procedure adds a task to the database. The argument is the structure of the task, the result is an error message (empty if there is no error). 
+* The EditTask procedure modifies a task in the database. The argument is the structure of the task, the result is an error message (empty if there is no error).
+* The DoneTask procedure changes the status of the task in the database to Completed. The argument is the task ID, the result is an error message (empty if there is no error).
+* The Delete Task procedure deletes the task from the database. The argument is the task ID, the result is an error message (empty if there is no error).
+* The ShowTask procedure provides the contents of the task from the database. The argument is the task ID, the result is the task structure.
+* The Show Task List procedure provides a list of the contents of tasks from the database. There is no argument, the result is a list of tasks.
+* The server itself fills in the 'id' field when adding a task.
+
 Each RPC returns 2 values, the error is a second. Therefore, the first return value for the Add Task, Edit Task, Done Task, DeleteTask function,  is Empty.
+
 So, the messages are: Task, TaskId, TaskList, Empty.
+
 The empty message from Google is not used to reduce dependencies and reserve the ability to add any field to it.
 # Test
 For simplicity, the client does not include any user interface and plays the role of a test:
@@ -61,6 +66,7 @@ For simplicity, the client does not include any user interface and plays the rol
 10) edit the remote task (similarly),
 11) mark the deleted task as completed (similarly).
 
+Sorting of tasks in the database is not required, since their order does not change by the procedures.
 # File structure
 todolist
 ```
